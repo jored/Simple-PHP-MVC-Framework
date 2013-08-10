@@ -30,16 +30,6 @@ $config = array(
             "password" => "pa$$",
             "host" => "localhost"
         )
-    ),
-    "urls" => array(
-        "baseUrl" => "http://domainname.com"
-    ),
-    "paths" => array(
-        "resources" => "/path/to/resources",
-        "images" => array(
-            "content" => $_SERVER["DOCUMENT_ROOT"] . "/images/content",
-            "layout" => $_SERVER["DOCUMENT_ROOT"] . "/images/layout"
-        )
     )
 );
 
@@ -61,6 +51,9 @@ defined("CLASS_PATH")
 
 defined("CONTROLLER_PATH")
     or define("CONTROLLER_PATH", realpath(dirname(__FILE__) . '/library/controller'));
+
+defined("ERROR_PATH")
+    or define("ERROR_PATH", realpath(dirname(__FILE__) . '/library/view/error'));
 
 /*
     Auto Load Class

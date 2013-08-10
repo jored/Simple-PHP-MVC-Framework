@@ -22,15 +22,22 @@ class Error {
     public function report( $type=null ){
         if ( isset( $type ) ){
             $this->errorCode = $type;
-            $this->header();
-        }else{
-            $this->blanket();
+        }
+        $this->header( );
+        $this->checkForFile( );
+    }
+
+    private function checkForFile( ){
+        $filename = ERROR_PATH . '/' . $this->errorCode . '.php';
+        if (file_exists($filename)) {
+            $result = @include( $filename );
+        } else {
+            $this->blanket( );
         }
     }
 
     private function header( ){
         header('HTTP/1.0 ' . $this->codes[$this->errorCode][0]);
-        $this->blanket();
     }
 
     private function blanket( ){
