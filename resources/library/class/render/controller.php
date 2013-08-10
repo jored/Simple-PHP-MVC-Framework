@@ -6,6 +6,7 @@ class Controller {
     public $template = '';
 
     function __construct( ){
+
         global $config;
         if ( empty($_GET['page']) ){
             $this->template = $config['site']['landing_page'];
@@ -17,14 +18,14 @@ class Controller {
 
     public function load( $override=null ) {
 
+        global $error;
         if ( isset($override) ){
             $this->template = $override;
         }
 
         $result = @include( CONTROLLER_PATH . '/' . $this->template . '.php');
         if ($result === false) {
-            // This needs to throw a 404 error
-            die("404 Unable to find this page");
+            $error->report( '404' );
         }
 
     }

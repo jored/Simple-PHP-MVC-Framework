@@ -4,6 +4,7 @@
 
     // Load Global Classes
     $site = new WEBSITE\Site;
+    $error = new WEBSITE\Error;
     $template = new RENDER\Template;
     $controller = new RENDER\Controller;
 
