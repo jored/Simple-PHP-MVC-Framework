@@ -3,6 +3,13 @@ namespace RENDER;
 
 class Template {
 
+    private function loadView( $filename ){
+        $result = @include( $filename );
+        if ($result === false) {
+            echo "View not available: $filename";
+        }
+    }
+
     function render( $contentFile, $variables = array() )
     {
         $contentFileFullPath = VIEW_PATH . "/" . $contentFile . '.php';
@@ -17,30 +24,30 @@ class Template {
             }
         }
 
-        require_once(VIEW_PATH . "/header.php");
+        $this->loadView( VIEW_PATH . "/header.php" );
 
         echo "<div id=\"container\">\n"
            . "\t<div id=\"content\">\n";
 
         if (file_exists($contentFileFullPath)) {
-            require_once($contentFileFullPath);
+            $this->loadView( $contentFileFullPath );
         } else {
             /*
                 If the file isn't found the error can be handled in lots of ways.
                 In this case we will just include an error template.
             */
-            require_once(VIEW_PATH . "/error.php");
+            $this->loadView( VIEW_PATH . "/error.php" );
         }
 
         // close content div
         echo "\t</div>\n";
 
-        require_once(VIEW_PATH . "/rightPanel.php");
+        $this->loadView( VIEW_PATH . "/rightPanel.php" ) ;
 
         // close container div
         echo "</div>\n";
 
-        require_once(VIEW_PATH . "/footer.php");
+        $this->loadView( VIEW_PATH . "/footer.php" );
     }
 
 }
