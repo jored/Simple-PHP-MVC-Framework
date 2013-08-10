@@ -9,6 +9,14 @@
 */
 
 $config = array(
+    "site" => array(
+        "id" => "HOST",
+        "name" => "Hosting Control Panel",
+        "domain" => "Hosting Control Panel",
+        "mode" => "dev",
+        "version" => "0.1",
+        "landing_page" => "home"
+    ),
     "db" => array(
         "dev" => array(
             "dbname" => "database1",
@@ -48,8 +56,28 @@ defined("VIEW_PATH")
 defined("MODEL_PATH")
     or define("MODEL_PATH", realpath(dirname(__FILE__) . '/library/model'));
 
-defined("TEMPLATES_PATH")
-    or define("TEMPLATES_PATH", realpath(dirname(__FILE__) . '/templates'));
+defined("CLASS_PATH")
+    or define("CLASS_PATH", realpath(dirname(__FILE__) . '/library/class'));
+
+defined("CONTROLLER_PATH")
+    or define("CONTROLLER_PATH", realpath(dirname(__FILE__) . '/library/controller'));
+
+/*
+    Auto Load Class
+*/
+spl_autoload_register(function($class){
+    $namespace = strpos($class, '\\');
+    if ( $namespace ){
+        $path = explode("\\", $class);
+        $result = @include( CLASS_PATH . '/' . $path[0] . '/' . $path[1] . '.php');
+    }else{
+        $result = @include( CLASS_PATH . '/' . $class . '.php');
+    }
+    if ($result === false) {
+        die("Unable to find the class file: $class ");
+    }
+});
+
 
 /*
     Error reporting.

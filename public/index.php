@@ -2,20 +2,11 @@
 
     require_once(realpath(dirname(__FILE__) . "/../resources/config.php"));
 
-    require_once(LIBRARY_PATH . "/templateFunctions.php");
+    // Load Global Classes
+    $site = new WEBSITE\Site;
+    $template = new RENDER\Template;
+    $controller = new RENDER\Controller;
 
-    /*
-        Now you can handle all your php logic outside of the template
-        file which makes for very clean code!
-    */
-
-    $setInIndexDotPhp = "Hey! I was set in the index.php file.";
-
-    // Must pass in variables (as an array) to use in template
-    $variables = array(
-        'setInIndexDotPhp' => $setInIndexDotPhp
-    );
-
-    renderLayoutWithContentFile("home.php", $variables);
+    $controller->load();
 
 ?>
