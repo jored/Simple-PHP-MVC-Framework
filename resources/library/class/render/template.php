@@ -38,12 +38,21 @@ class Template
      *
      * @access private
      */
-    private function _loadView( $filename )
+    private function _loadView( $filename, $variables )
     {
-        $result = @include VIEW_PATH . "/" . $filename . ".php" ;
-        if ($result === false) {
-            echo "View not available: $filename";
+
+        // making sure passed in variables are in scope of the template
+        // each key in the $variables array will become a variable
+        if (count($variables) > 0) {
+            foreach ($variables as $key => $value) {
+                if (strlen($key) > 0) {
+                    ${$key} = $value;
+                }
+            }
         }
+
+        include VIEW_PATH . "/" . $filename . ".php" ;
+
     }
 
     /**
@@ -74,13 +83,13 @@ class Template
      *
      * @access private
      */
-    private function _loadTemplates( $set )
+    private function _loadTemplates( $set,$variables )
     {
         global $templates;
 
         $loadTemplates = $templates[$this->_defaultTemplate][$set];
 
-        $this->_loadView($loadTemplates);
+        $this->_loadView($loadTemplates, $variables);
 
     }
 
@@ -96,21 +105,11 @@ class Template
 
         $this->_setTemplate($template);
 
-        // making sure passed in variables are in scope of the template
-        // each key in the $variables array will become a variable
-        if (count($variables) > 0) {
-            foreach ($variables as $key => $value) {
-                if (strlen($key) > 0) {
-                    ${$key} = $value;
-                }
-            }
-        }
+        $this->_loadTemplates('prepend', $variables);
 
-        $this->_loadTemplates('prepend');
+        $this->_loadView($contentFile, $variables);
 
-        $this->_loadView($contentFile);
-
-        $this->_loadTemplates('append');
+        $this->_loadTemplates('append', $variables);
     }
 
 }

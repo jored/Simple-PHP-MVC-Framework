@@ -33,14 +33,12 @@ class Home extends Base_Controller
 
         global $template;
 
-        $setInIndexDotPhp = "Hey! I was set in the index.php file.";
-
         // Must pass in variables (as an array) to use in template
         $variables = array(
-            'setInIndexDotPhp' => $setInIndexDotPhp
+            'title' => "This is the home page"
         );
 
-        $template->render("home", $variables, "dashboard");
+        $template->render("home", $variables);
 
     }
 
@@ -49,7 +47,14 @@ class Home extends Base_Controller
      */
     public function about( )
     {
-        echo "about".$this->page;
+        global $template;
+
+        // Must pass in variables (as an array) to use in template
+        $variables = array(
+            'title' => "This is the about us page"
+        );
+
+        $template->render("home", $variables);
     }
 
 }
