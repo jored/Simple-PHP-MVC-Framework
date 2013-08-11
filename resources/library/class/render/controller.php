@@ -21,6 +21,7 @@ namespace render;
 * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
 * @link     http://roughcoder.com
 */
+
 class Controller
 {
     public $template = '';
@@ -67,10 +68,9 @@ class Controller
 
         $myInstance = new $className;
 
-        if(method_exists($myInstance, $method))
-        {
+        if ( method_exists($myInstance, $method) ) {
             return $myInstance->$method( );
-        }else{
+        } else {
             $error->report('404');
         }
 
