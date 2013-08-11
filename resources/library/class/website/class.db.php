@@ -1,6 +1,7 @@
 <?php
 
 namespace website;
+
 use PDO;
 
 class Db

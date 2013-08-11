@@ -19,15 +19,15 @@ $config = array(
     ),
     "db" => array(
         "dev" => array(
-            "dbname" => "database1",
-            "username" => "dbUser",
-            "password" => "pa$$",
-            "host" => "localhost"
+            "dbname" => "c2_dev",
+            "username" => "c2neilbarton",
+            "password" => "Rooster2012!",
+            "host" => "data.roughcoder.com"
         ),
         "live" => array(
-            "dbname" => "database2",
-            "username" => "dbUser",
-            "password" => "pa$$",
+            "dbname" => "framework",
+            "username" => "root",
+            "password" => "root",
             "host" => "localhost"
         )
     )
@@ -67,22 +67,32 @@ defined("CONTROLLER_PATH")
 defined("ERROR_PATH")
     or define("ERROR_PATH", realpath(dirname(__FILE__) . '/library/view/error'));
 
+defined("LOG_PATH")
+    or define("LOG_PATH", realpath(dirname(__FILE__) . '/logs'));
+
+defined("EMAIL_TEMPLATE")
+    or define("EMAIL_TEMPLATE", realpath(dirname(__FILE__) . '/library/email_template'));
+
 /*
     Auto Load Class
 */
 spl_autoload_register(function($class){
-
     $namespace = strpos($class, '\\');
+
     if ($namespace) {
         $path = explode("\\", $class);
         if ( $path[0] === 'controller') {
             $result = @include( CONTROLLER_PATH . '/' . $path[1] . '.php');
         } else {
-            $result = @include( CLASS_PATH . '/' . $path[0] . '/' . $path[1] . '.php');
+            $result = @include( CLASS_PATH . '/' . $path[0] . '/class.' . $path[1] . '.php');
         }
     } else {
-        $result = @include( CLASS_PATH . '/' . $class . '.php');
+        $result = @include( CLASS_PATH . '/class.' . $class . '.php');
+        if ($result === false) {
+            $result = @include( CLASS_PATH . '/'. $class .'/class.' . $class . '.php');
+        }
     }
+
     if ($result === false) {
         die("Unable to find the class file: $class ");
     }

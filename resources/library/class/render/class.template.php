@@ -36,9 +36,8 @@ class Template
      *
      * @param [String] $filename View Name
      *
-     * @access private
      */
-    private function _loadView( $filename, $variables )
+    public function loadView( $filename, $variables )
     {
 
         // making sure passed in variables are in scope of the template
@@ -91,7 +90,7 @@ class Template
 
         $loadTemplates = $templates[$this->_defaultTemplate][$set];
 
-        $this->_loadView($loadTemplates, $variables);
+        $this->loadView($loadTemplates, $variables);
 
     }
 
@@ -109,7 +108,7 @@ class Template
 
         $this->_loadTemplates('prepend', $variables);
 
-        $this->_loadView($contentFile, $variables);
+        $this->loadView($contentFile, $variables);
 
         $this->_loadTemplates('append', $variables);
     }
