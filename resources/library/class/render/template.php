@@ -1,19 +1,100 @@
 <?php
+
+/**
+* Code for the render/Template class
+*
+* @category Render
+* @package  Template
+* @author   Neil Barton <neil@roughcoder.com>
+* @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+* @link     http://roughcoder.com
+*/
+
 namespace render;
+
+/**
+* Template Class
+*
+* @category Render
+* @package  Template
+* @author   Neil Barton <neil@roughcoder.com>
+* @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+* @link     http://roughcoder.com
+*/
 
 class Template
 {
-    private function loadView( $filename )
+
+    /**
+     * The default template being used
+     * @var string
+     */
+    private $_defaultTemplate = '';
+
+    /**
+     * Function to load a view
+     *
+     * @param [String] $filename View Name
+     *
+     * @access private
+     */
+    private function _loadView( $filename )
     {
-        $result = @include( $filename );
+        $result = @include VIEW_PATH . "/" . $filename . ".php" ;
         if ($result === false) {
             echo "View not available: $filename";
         }
     }
 
-    public function render( $contentFile, $variables = array() )
+    /**
+     * Function to set the variable $_defaultTemplate
+     *
+     * @param [String] $templated Template Name
+     *
+     * @access private
+     */
+    private function _setTemplate( $templated )
     {
-        $contentFileFullPath = VIEW_PATH . "/" . $contentFile . '.php';
+        global $templates;
+
+        if ($templated !== 'default') {
+            if ( isset( $templates[$templated] ) ) {
+                if ( is_array($templates[$templated]) ) {
+                    $this->_defaultTemplate = $templated;
+                }
+            }
+        }
+        $this->_defaultTemplate = 'default';
+    }
+
+    /**
+     * Function to load views from the template
+     *
+     * @param [String] $set Template Set
+     *
+     * @access private
+     */
+    private function _loadTemplates( $set )
+    {
+        global $templates;
+
+        $loadTemplates = $templates[$this->_defaultTemplate][$set];
+
+        $this->_loadView($loadTemplates);
+
+    }
+
+    /**
+     * Function to render the main view and append/prepend template views.
+     *
+     * @param string $contentFile The Main View
+     * @param array  $variables   Variables to pass to views
+     * @param string $template    Template to use
+     */
+    public function render( $contentFile, $variables = array(), $template = 'default' )
+    {
+
+        $this->_setTemplate($template);
 
         // making sure passed in variables are in scope of the template
         // each key in the $variables array will become a variable
@@ -25,19 +106,11 @@ class Template
             }
         }
 
-        $this->loadView( VIEW_PATH . "/header.php" );
+        $this->_loadTemplates('prepend');
 
-        if (file_exists($contentFileFullPath)) {
-            $this->loadView( $contentFileFullPath );
-        } else {
-            /*
-                If the file isn't found the error can be handled in lots of ways.
-                In this case we will just include an error template.
-            */
-            $this->loadView( VIEW_PATH . "/error.php" );
-        }
+        $this->_loadView($contentFile);
 
-        $this->loadView( VIEW_PATH . "/footer.php" );
+        $this->_loadTemplates('append');
     }
 
 }

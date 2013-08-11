@@ -1,10 +1,10 @@
 <?php
 
 /**
-* Controller Class
+* Code for the render/Controller class
 *
-* @category RENDER
-* @package  Class
+* @category Render
+* @package  Controller
 * @author   Neil Barton <neil@roughcoder.com>
 * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
 * @link     http://roughcoder.com
@@ -15,7 +15,7 @@ namespace render;
 /**
 * Controller Class
 *
-* @category RENDER
+* @category Render
 * @package  Controller
 * @author   Neil Barton <neil@roughcoder.com>
 * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License

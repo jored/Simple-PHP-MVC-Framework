@@ -40,7 +40,7 @@ class Home extends Base_Controller
             'setInIndexDotPhp' => $setInIndexDotPhp
         );
 
-        $template->render("home", $variables);
+        $template->render("home", $variables, "dashboard");
 
     }
 

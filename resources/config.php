@@ -33,6 +33,18 @@ $config = array(
     )
 );
 
+
+$templates = array(
+    "default" => array(
+        "prepend" => "header",
+        "append" => "footer"
+    ),
+    "dashboard" => array(
+        "prepend" => "header",
+        "append" => "footer"
+    )
+);
+
 /*
     Creating constants for heavily used paths makes things a lot easier.
     ex. require_once(LIBRARY_PATH . "Paginator.php")
