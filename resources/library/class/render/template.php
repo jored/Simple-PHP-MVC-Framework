@@ -51,6 +51,8 @@ class Template
             }
         }
 
+        global $site;
+
         include VIEW_PATH . "/" . $filename . ".php" ;
 
     }

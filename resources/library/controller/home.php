@@ -33,6 +33,7 @@ class Home extends Base_Controller
 
         global $template;
 
+
         // Must pass in variables (as an array) to use in template
         $variables = array(
             'title' => "This is the home page"
