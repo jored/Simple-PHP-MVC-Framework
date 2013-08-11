@@ -31,16 +31,16 @@ class Home extends Base_Controller
     public function home( )
     {
 
-            global $template;
+        global $template;
 
-            $setInIndexDotPhp = "Hey! I was set in the index.php file.";
+        $setInIndexDotPhp = "Hey! I was set in the index.php file.";
 
-            // Must pass in variables (as an array) to use in template
-            $variables = array(
-                'setInIndexDotPhp' => $setInIndexDotPhp
-            );
+        // Must pass in variables (as an array) to use in template
+        $variables = array(
+            'setInIndexDotPhp' => $setInIndexDotPhp
+        );
 
-            $template->render("home", $variables);
+        $template->render("home", $variables);
 
     }
 

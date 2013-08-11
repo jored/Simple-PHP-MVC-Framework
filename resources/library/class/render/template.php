@@ -1,16 +1,17 @@
 <?php
-namespace RENDER;
+namespace render;
 
-class Template {
-
-    private function loadView( $filename ){
+class Template
+{
+    private function loadView( $filename )
+    {
         $result = @include( $filename );
         if ($result === false) {
             echo "View not available: $filename";
         }
     }
 
-    function render( $contentFile, $variables = array() )
+    public function render( $contentFile, $variables = array() )
     {
         $contentFileFullPath = VIEW_PATH . "/" . $contentFile . '.php';
 
@@ -26,9 +27,6 @@ class Template {
 
         $this->loadView( VIEW_PATH . "/header.php" );
 
-        echo "<div id=\"container\">\n"
-           . "\t<div id=\"content\">\n";
-
         if (file_exists($contentFileFullPath)) {
             $this->loadView( $contentFileFullPath );
         } else {
@@ -39,16 +37,7 @@ class Template {
             $this->loadView( VIEW_PATH . "/error.php" );
         }
 
-        // close content div
-        echo "\t</div>\n";
-
-        $this->loadView( VIEW_PATH . "/rightPanel.php" ) ;
-
-        // close container div
-        echo "</div>\n";
-
         $this->loadView( VIEW_PATH . "/footer.php" );
     }
 
 }
-?>
