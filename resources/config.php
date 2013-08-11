@@ -59,23 +59,26 @@ defined("ERROR_PATH")
     Auto Load Class
 */
 spl_autoload_register(function($class){
+
     $namespace = strpos($class, '\\');
-    if ( $namespace ){
+    if ($namespace) {
         $path = explode("\\", $class);
-        $result = @include( CLASS_PATH . '/' . $path[0] . '/' . $path[1] . '.php');
-    }else{
+        if ( $path[0] === 'controller') {
+            $result = @include( CONTROLLER_PATH . '/' . $path[1] . '.php');
+        } else {
+            $result = @include( CLASS_PATH . '/' . $path[0] . '/' . $path[1] . '.php');
+        }
+    } else {
         $result = @include( CLASS_PATH . '/' . $class . '.php');
     }
     if ($result === false) {
         die("Unable to find the class file: $class ");
     }
-});
 
+});
 
 /*
     Error reporting.
 */
 ini_set("error_reporting", "true");
 error_reporting(E_ALL|E_STRCT);
-
-?>

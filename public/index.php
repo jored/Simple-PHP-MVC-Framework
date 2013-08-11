@@ -6,7 +6,7 @@
     $site = new WEBSITE\Site;
     $error = new WEBSITE\Error;
     $template = new RENDER\Template;
-    $controller = new RENDER\Controller;
+    $controller = new render\controller;
 
     $controller->load();
 

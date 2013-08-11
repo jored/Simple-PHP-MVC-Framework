@@ -1,14 +1,23 @@
 <?php
+namespace controller;
 
-    global $template;
+class Home
+{
+    public $page = '';
 
-    $setInIndexDotPhp = "Hey! I was set in the index.php file.";
+    public function __construct( )
+    {
+        $this->page = $_SERVER['REQUEST_URI'];
+    }
 
-    // Must pass in variables (as an array) to use in template
-    $variables = array(
-        'setInIndexDotPhp' => $setInIndexDotPhp
-    );
+    public function home( )
+    {
+        echo "this is the page".$this->page;
+    }
 
-    $template->render( "home", $variables);
+    public function about( )
+    {
+        echo "about".$this->page;
+    }
 
-?>
+}

@@ -1,34 +1,79 @@
 <?php
-namespace RENDER;
 
-class Controller {
+/**
+* Controller Class
+*
+* @category RENDER
+* @package  Class
+* @author   Neil Barton <neil@roughcoder.com>
+* @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+* @link     http://roughcoder.com
+*/
 
+namespace render;
+
+/**
+* Controller Class
+*
+* @category RENDER
+* @package  Controller
+* @author   Neil Barton <neil@roughcoder.com>
+* @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+* @link     http://roughcoder.com
+*/
+class Controller
+{
     public $template = '';
+    public $method = '';
 
-    function __construct( ){
-
+    /**
+     * Contruct Function
+     */
+    public function __construct( )
+    {
         global $config;
-        if ( empty($_GET['page']) ){
+
+        // Get Controller
+        if ( empty($_GET['page']) ) {
             $this->template = $config['site']['landing_page'];
-        }else{
+        } else {
             $this->template = $_GET['page'];
+        }
+
+        // Get Method
+        if ( empty($_GET['method']) ) {
+            $this->method = $this->template;
+        } else {
+            $this->method = $_GET['method'];
         }
 
     }
 
-    public function load( $override=null ) {
-
+    /**
+     * Load Page/Controller
+     *
+     * @param [String] $override Name of a controller
+     */
+    public function load( $override=null )
+    {
         global $error;
-        if ( isset($override) ){
+
+        if ( isset($override) ) {
             $this->template = $override;
         }
 
-        $result = @include( CONTROLLER_PATH . '/' . $this->template . '.php');
-        if ($result === false) {
-            $error->report( '404' );
+        $className = "controller\\".$this->template;
+        $method = $this->method;
+
+        $myInstance = new $className;
+
+        if(method_exists($myInstance, $method))
+        {
+            return $myInstance->$method( );
+        }else{
+            $error->report('404');
         }
 
     }
 
 }
-?>
