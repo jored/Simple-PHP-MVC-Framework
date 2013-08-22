@@ -10,7 +10,7 @@
 * @link     http://roughcoder.com
 */
 
-namespace render;
+namespace WEBSITE;
 
 /**
 * Template Class

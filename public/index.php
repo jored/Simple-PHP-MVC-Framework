@@ -5,8 +5,8 @@
     // Load Global Classes
     $site = new WEBSITE\Site;
     $error = new WEBSITE\Error;
-    $template = new render\Template;
-    $controller = new render\Controller;
+    $template = new WEBSITE\Template;
+    $controller = new WEBSITE\Controller;
 
     $controller->load();
 
