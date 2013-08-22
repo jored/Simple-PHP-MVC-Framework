@@ -41,7 +41,7 @@ class Home extends Base_Controller
         );
 
         // Call the view
-        $template->render("home", $variables);
+        $template->render("home", $variables, 'default');
 
     }
 
@@ -54,10 +54,10 @@ class Home extends Base_Controller
 
         // Must pass in variables (as an array) to use in template
         $variables = array(
-            'title' => "This is the about us page"
+            'page_title' => "This is the about us page"
         );
 
-        $template->render("home", $variables);
+        $template->render("home", $variables, 'dashboard');
     }
 
 }

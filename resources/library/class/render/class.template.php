@@ -65,16 +65,19 @@ class Template
      */
     private function _setTemplate( $templated )
     {
-        global $templates;
+        global $config;
+        $templates = $config["templates"];
 
         if ($templated !== 'default') {
             if ( isset( $templates[$templated] ) ) {
                 if ( is_array($templates[$templated]) ) {
                     $this->_defaultTemplate = $templated;
+                    return;
                 }
             }
         }
         $this->_defaultTemplate = 'default';
+
     }
 
     /**
@@ -86,10 +89,9 @@ class Template
      */
     private function _loadTemplates( $set,$variables )
     {
-        global $templates;
-
+        global $config;
+        $templates = $config["templates"];
         $loadTemplates = $templates[$this->_defaultTemplate][$set];
-
         $this->loadView($loadTemplates, $variables);
 
     }
@@ -105,6 +107,7 @@ class Template
     {
 
         $this->_setTemplate($template);
+        echo $this->_defaultTemplate;
 
         $this->_loadTemplates('prepend', $variables);
 

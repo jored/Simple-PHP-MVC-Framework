@@ -34,13 +34,13 @@ $config = array(
 );
 
 
-$templates = array(
+$config["templates"] = array(
     "default" => array(
         "prepend" => "header",
         "append" => "footer"
     ),
     "dashboard" => array(
-        "prepend" => "header",
+        "prepend" => "footer",
         "append" => "footer"
     )
 );
