@@ -76,28 +76,46 @@ defined("EMAIL_TEMPLATE")
 /*
     Auto Load Class
 */
-spl_autoload_register(function($class){
-    $namespace = strpos($class, '\\');
+spl_autoload_register(
+    function ($class) {
 
-    if ($namespace) {
-        $path = explode("\\", $class);
-        if ( $path[0] === 'controller') {
-            $result = @include( CONTROLLER_PATH . '/' . $path[1] . '.php');
+        $namespace = strpos($class, '\\');
+
+        if ($namespace) {
+            $path = explode("\\", $class);
         } else {
-            $result = @include( CLASS_PATH . '/' . $path[0] . '/class.' . $path[1] . '.php');
+            $path[0] = $class;
         }
-    } else {
-        $result = @include( CLASS_PATH . '/class.' . $class . '.php');
+
+        if ( $path[0] === 'controller') {
+            $result = @include CONTROLLER_PATH . '/' . $path[1] . '.php';
+            if ( $result !== false ) {
+                return;
+            }
+            unset($path[0]);
+            $path = array_values($path);
+            var_dump($path);
+        }
+
+        $filename = $path[count($path) - 1] . '.php';
+        unset( $path[count($path)-1]);
+
+        $file = '';
+        for ($i=0; $i < count($path); $i++) {
+            $file = $file.'/'.$path[$i];
+        }
+
+        $result = @include CLASS_PATH . '/' . $file.'/'.$filename ;
         if ($result === false) {
-            $result = @include( CLASS_PATH . '/'. $class .'/class.' . $class . '.php');
+            $result = @include CLASS_PATH . '/' . $file.'/class.'.$filename;
         }
-    }
 
-    if ($result === false) {
-        die("Unable to find the class file: $class ");
-    }
+        if ($result === false) {
+            die("Unable to find the class file: $class ");
+        }
 
-});
+    }
+);
 
 /*
     Error reporting.
