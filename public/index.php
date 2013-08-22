@@ -11,6 +11,7 @@
     $error = new WEBSITE\Error;
     $template = new WEBSITE\Template;
     $controller = new WEBSITE\Controller;
+    $response = new WEBSITE\Response;
 
 
     $page->site = "Page SIte";
