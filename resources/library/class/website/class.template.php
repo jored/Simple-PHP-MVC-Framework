@@ -40,6 +40,8 @@ class Template
     public function loadView( $filename, $variables )
     {
 
+        global $page;
+
         // making sure passed in variables are in scope of the template
         // each key in the $variables array will become a variable
         if (count($variables) > 0) {
@@ -49,8 +51,6 @@ class Template
                 }
             }
         }
-
-        global $site;
 
         include VIEW_PATH . "/" . $filename . ".php" ;
 
